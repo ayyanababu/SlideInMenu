@@ -13,15 +13,17 @@ class SlideMenu: NSObject, UITableViewDelegate, UITableViewDataSource {
     lazy var menuView = UIView()
     lazy var menu = UITableView()
     lazy var blackView = UIView()
+    lazy var navigationview = UINavigationBar()
+    
     
     let cellID = "cell"
+    let PERCENTAGE_TO_SLIDE: CGFloat = 0.50
     
     override init() {
         super.init()
         
         self.menu.delegate = self
         self.menu.dataSource = self
-        
         self.menu.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellID)
     }
     
@@ -45,7 +47,7 @@ class SlideMenu: NSObject, UITableViewDelegate, UITableViewDataSource {
             blackView.backgroundColor = UIColor(white: 0.0, alpha: 1.0)
             self.blackView.alpha = 0
             
-            let widthtoBe = window.frame.width * 0.50
+            let widthtoBe = window.frame.width * PERCENTAGE_TO_SLIDE
             
             UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1.0, options: .CurveEaseOut, animations: {
                 self.blackView.alpha = 0.5
@@ -77,7 +79,6 @@ extension SlideMenu{
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 20
     }
     
