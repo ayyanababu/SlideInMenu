@@ -15,6 +15,8 @@ class HomeVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HomeVC.rotated), name: UIDeviceOrientationDidChangeNotification, object: nil)
+
     }
     
     
@@ -48,6 +50,10 @@ class HomeVC: UITableViewController {
     }
     
     
+    func rotated(){
+        slideMenu.hideMenu()
+       // slideMenu.clickOnMenuIcon()
+    }
         
     
     
