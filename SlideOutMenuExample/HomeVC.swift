@@ -45,14 +45,13 @@ class HomeVC: UITableViewController {
     
     @IBAction func clickOnMenu(sender: AnyObject) {
         print("clicked on Hamburger Icon")
-        slideMenu.clickOnMenuIcon()
+        slideMenu.clickOnMenuIcon((self.navigationController?.navigationBar.frame.size.height)!)
         
     }
     
     
     func rotated(){
         slideMenu.hideMenu()
-       // slideMenu.clickOnMenuIcon()
     }
         
     

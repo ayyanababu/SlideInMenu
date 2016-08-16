@@ -14,6 +14,7 @@ class SlideMenu: NSObject, UITableViewDelegate, UITableViewDataSource {
     lazy var menu = UITableView()
     lazy var blackView = UIView()
     lazy var navigationview = UINavigationBar()
+    var navheight: CGFloat?
     
     
     let cellID = "cell"
@@ -28,17 +29,24 @@ class SlideMenu: NSObject, UITableViewDelegate, UITableViewDataSource {
     }
     
     
-    func clickOnMenuIcon(){
+    func clickOnMenuIcon(navbarheight: CGFloat){
         
         if let window = UIApplication.sharedApplication().keyWindow{
+            navheight = navbarheight
             
             blackView.frame =  window.frame
+            
+            navigationview.frame = CGRectMake(0, 0, 0, navheight!)
+            navigationview.barTintColor = UIColor.redColor()
+
+            window.addSubview(navigationview)
+            
             
             //adding Tableview to window
             self.menu.layer.shadowColor = UIColor.darkGrayColor().CGColor
             self.menu.layer.shadowOffset = CGSizeMake(3.0, 0.0)
             self.menu.layer.shadowOpacity = 0.8
-            self.menu.frame = CGRectMake(0, 0, 0, window.frame.size.height)
+            self.menu.frame = CGRectMake(0, self.navigationview.frame.size.height, 0, window.frame.size.height)
             
             window.addSubview(blackView)
             window.addSubview(menu)
@@ -51,7 +59,10 @@ class SlideMenu: NSObject, UITableViewDelegate, UITableViewDataSource {
             
             UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1.0, options: .CurveEaseOut, animations: {
                 self.blackView.alpha = 0.5
-                self.menu.frame = CGRectMake(window.frame.origin.x, window.frame.origin.y, widthtoBe, window.frame.height)
+                self.navigationview.frame = CGRectMake(0, 0, widthtoBe, self.navheight!)
+                self.menu.frame = CGRectMake(window.frame.origin.x, self.navigationview.frame.size.height+1, widthtoBe, window.frame.height)
+                //self.menu.frame = CGRectMake(window.frame.origin.x, window.frame.origin.y, widthtoBe, window.frame.height)
+
                 
                 }, completion: nil)
             
@@ -65,7 +76,8 @@ class SlideMenu: NSObject, UITableViewDelegate, UITableViewDataSource {
         let window = UIApplication.sharedApplication().keyWindow
         UIView.animateWithDuration(1.0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1.0, options: .CurveEaseOut, animations: {
             self.blackView.alpha = 0
-            self.menu.frame = CGRectMake(0, 0, 0, window!.frame.size.height)
+            self.navigationview.frame = CGRectMake(0, 0, 0, self.navheight!)
+            self.menu.frame = CGRectMake(0, self.navigationview.frame.size.height, 0, window!.frame.size.height)
             
             }, completion: nil)
     }
